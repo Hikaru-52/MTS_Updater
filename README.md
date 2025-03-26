@@ -29,7 +29,7 @@ MTS_UP\logs
 This directory contains logs that can help diagnose issues.
 
 ## 📜 License
-This project is licensed under [MIT License](LICENSE).
+This project is licensed under [MIT License]([LICENSE](https://mit-license.org)).
 
 ## 🤝 Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
