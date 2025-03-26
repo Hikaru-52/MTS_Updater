@@ -6,6 +6,14 @@ import java.io.IOException;
 
 
 public class Main {
+	public static final String RESET = "\u001B[0m";
+	public static final String RED = "\u001B[31m";
+	public static final String ORANGE = "\u001B[38;5;214m";
+	public static final String YELLOW = "\u001B[33m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String BLUE = "\u001B[36m";
+	public static final String INDIGO = "\u001B[38;5;54m";
+	public static final String VIOLET = "\u001B[35m";
 	
 	public static Logger log = new Logger();
 	private static ModExtractor me = new ModExtractor();
@@ -28,7 +36,7 @@ public class Main {
 		// Clear temp folder
 		clearTemp();
 		
-		System.out.println("Scanning mod folder...");
+		System.out.println("🔍 Scanning "+ORANGE+"mod"+RESET+" folder...");
 		
 		List<String> mods = me.scanJars();
 		
@@ -39,7 +47,7 @@ public class Main {
 			// Check if tempDir exists
 			me.tempDirExists();
 			
-			msg = "Processing " + mod + "...";
+			msg = "\n⏳ Processing "+ GREEN + mod +RESET +"...";
 			System.out.println(msg);
 			log.WriteLogs(msg, "INFO");
 			
@@ -47,14 +55,14 @@ public class Main {
 			boolean success = me.unzipMod(mod);
 			
 			if (!success) {
-				msg = "Failed to extract mod " + mod;
+				msg = "❌ "+RED+"Failed "+RESET+"to extract"+ORANGE+"mod "+GREEN+ mod;
 				System.err.println(msg);
 				log.WriteLogs(msg, "WARN");
 				clearTemp();
 				continue;
 			}
 			
-			msg = mod + " has been successfully extracted";
+			msg = "✅ "+ORANGE+mod+RESET + " has been successfully extracted";
 			System.out.println(msg);
 			log.WriteLogs(msg, "INFO");
 			
@@ -62,14 +70,14 @@ public class Main {
 			success = upd.updateMod(mod);
 			
 			if (!success) {
-				msg = "Failed to update mod " + mod;
+				msg = "❌ "+RED+"Failed "+RESET+" to update "+ORANGE+"mod "+GREEN+ mod;
 				System.err.println(msg);
 				log.WriteLogs(msg, "WARN");
 				clearTemp();
 				continue;
 			}
 			
-			msg = mod + " has been successfully updated";
+			msg = "\uD83D\uDD04 "+ORANGE+mod+RESET + " has been successfully updated";
 			System.out.println(msg);
 			log.WriteLogs(msg, "INFO");
 			
@@ -78,14 +86,14 @@ public class Main {
 			success = me.GetUpdatedMod(mod);
 			
 			if (!success) {
-				msg = "Failed to create updated mod jar file: " + mod;
+				msg = "❌ "+RED+"Failed "+RESET+"to create updated"+ORANGE+"mod "+"jar file: "+GREEN+ mod+RESET;
 				System.err.println(msg);
 				log.WriteLogs(msg, "WARN");
 				clearTemp();
 				continue;
 			}
 			
-			msg = "Finished processing " + mod;
+			msg = "Finished processing "+GREEN+mod+RESET;
 			System.out.println(msg);
 			log.WriteLogs(msg, "INFO");
 		}

@@ -37,7 +37,7 @@ public class Updater {
 		// Create assets\mts\models\item directory
 		success = createItemDir();
 		if (!success) {
-			msg = "Unable to create directory assets\\mts\\models\\item";
+			msg = "❌ Unable to create directory assets\\mts\\models\\item";
 			Main.log.WriteLogs(msg, "WARN");
 			System.err.println(msg);
 			return false; // If it was not possible to create the directories then return failure
@@ -45,7 +45,7 @@ public class Updater {
 		
 		// Move every file in assets\pack\textures\item sub directories into item
 		for (String pack : packs) {
-			msg = "Processing package " + pack + "...";
+			msg = Main.RESET+" > Processing package " +Main.YELLOW+pack+Main.RESET+"...";
 			Main.log.WriteLogs(msg, "INFO");
 			System.out.println(msg);
 			
@@ -55,7 +55,7 @@ public class Updater {
 			success = itemDirFix(packDir);
 			
 			if (!success) {
-				msg = "Unable to find directory " + packDir;
+				msg = "❌ Unable to find directory " + packDir;
 				Main.log.WriteLogs(msg, "WARN");
 				System.err.println(msg);
 				continue;
@@ -64,7 +64,7 @@ public class Updater {
 			// Check for sub directories and moves textures to item
 			success = checkDirs(packDir);
 			if (!success) {
-				msg = "Unable to find or move textures to " + packDir + " from its sub directories";
+				msg = "❌ Unable to find or move textures to " + packDir + " from its sub directories";
 				Main.log.WriteLogs(msg, "WARN");
 				System.err.println(msg);
 				continue;
@@ -85,7 +85,7 @@ public class Updater {
 				try {
 					file.getAbsoluteFile().createNewFile();
 				} catch (Exception e) {
-					Main.log.WriteLogs("Error during file creation: " + e.getMessage(), "ERROR");
+					Main.log.WriteLogs("❌ Error during file creation: " + e.getMessage(), "ERROR");
 					return false;
 				}
 				if (file.exists()) {
@@ -98,16 +98,16 @@ public class Updater {
 			            			"}\n" +
 			            		"}");
 			        } catch (IOException ex) {
-			            Main.log.WriteLogs("Exception occurred while writing on file " + file + ": " + ex, "ERROR");
+			            Main.log.WriteLogs("❌ Exception occurred while writing on file " + file + ": " + ex, "ERROR");
 			        }
 				}
 				else {
-					Main.log.WriteLogs("File not found, unable to write.", "ERROR");
+					Main.log.WriteLogs("❌ File not found, unable to write.", "ERROR");
 				}
 				
 			}
 			
-			msg = "Processed package " + pack;
+			msg = " > Processed package " +Main.YELLOW+pack;
 			Main.log.WriteLogs(msg, "INFO");
 			System.out.println(msg);
 		}
@@ -134,7 +134,7 @@ public class Updater {
 				checkDirs(sd.getPath());
 			}
 			if (!moveTextures(sd.getPath(), path)) {
-				msg = "Failed to move textures from " + sd.getPath() + " to " + path;
+				msg = "❌ Failed to move textures from " + sd.getPath() + " to " + path;
 				Main.log.WriteLogs(msg, "WARN");
 				//System.err.println(msg);
 				return false;
@@ -157,7 +157,7 @@ public class Updater {
 		
 		File[] textures = s.listFiles((d, name) -> name.endsWith(".png")); // Gets all textures to transfer
 		if (textures.length == 0) {
-			msg = "No textures found in " + source;
+			msg = "❌ No textures found in " + source;
 			Main.log.WriteLogs(msg, "WARN");
 			//System.err.println(msg);
 			return true;
@@ -171,7 +171,7 @@ public class Updater {
                 //System.out.println(msg);
                 Main.log.WriteLogs(msg, "INFO");
             } catch (IOException e) {
-            	msg = "Failed to move: " + texture.getName() + " - " + e.getMessage();
+            	msg = " ❌ Failed to move: " + texture.getName() + " - " + e.getMessage();
                 //System.out.println(msg);
                 Main.log.WriteLogs(msg, "WARN");
                 return false;
@@ -191,7 +191,7 @@ public class Updater {
 			 File itemDirToFix = new File(packDir2);
 			 if (itemDirToFix.exists()) {
 				itemDirToFix.renameTo(itemDir);
-				msg = "Renamed folder " + packDir2 + " to " + packDir;
+				msg = " > Items folder found: renamed it to "+Main.YELLOW+"item"+Main.RESET;
 				Main.log.WriteLogs(msg, "INFO");
 				System.out.println(msg);
 			 }
@@ -200,7 +200,7 @@ public class Updater {
 			 }
 		}
 		else {
-			msg = "Directory " + packDir + " found";
+			msg = "\uD83D\uDCC4 Directory " + Main.YELLOW+packDir + Main.RESET+" found";
 			Main.log.WriteLogs(msg, "INFO");
 			System.out.println(msg);
 		}

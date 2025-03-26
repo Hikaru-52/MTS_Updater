@@ -24,7 +24,7 @@ public class ModExtractor {
 	        zipFile(modPath, zippedMod);
 
 	    } catch (IOException e) {
-	    	String msg = "Error during zipping for mod " + mod + ": " + e.getMessage();
+	    	String msg = "❌ Error during zipping for"+Main.ORANGE+"mod "+Main.GREEN+mod+ ": " + e.getMessage()+Main.RESET;
 	        Main.log.WriteLogs(msg, "ERROR");;
 	        return false;  // Indicate failure
 	    }
@@ -44,7 +44,7 @@ public class ModExtractor {
 		// Ensure the file exists
 	    File zipFile = new File(zipFilePath);
 	    if (!zipFile.exists() || !zipFilePath.endsWith(".zip")) {
-	    	msg = "Error: ZIP file does not exist or is invalid.";
+	    	msg = "❌ Error: ZIP file does not exist or is invalid.";
 	        System.out.println(msg);
 	        Main.log.WriteLogs(msg, "ERROR");
 	        return false;
@@ -57,7 +57,7 @@ public class ModExtractor {
 	    // Delete existing JAR file if it exists
 	    if (jarFile.exists()) {
 	        if (!jarFile.delete()) {
-	            msg = "Error: Could not delete existing JAR file.";
+	            msg = "❌ Error: Could not delete existing JAR file.";
 	            System.out.println(msg);
 	            Main.log.WriteLogs(msg, "ERROR");
 	            return false;
@@ -66,12 +66,12 @@ public class ModExtractor {
 	    
 	    // Rename the file
 	    if (zipFile.renameTo(jarFile)) {
-	    	msg = "Successfully converted ZIP to JAR: " + jarFilePath;
+	    	msg = "\uD83D\uDCE6 Successfully converted "+Main.ORANGE+"ZIP "+Main.RESET+"to "+Main.ORANGE+"JAR"+Main.RESET+": " + jarFilePath+Main.RESET;
 	        System.out.println(msg);
 	        Main.log.WriteLogs(msg, "INFO");
 	        return true;
 	    } else {
-	    	msg = "Error: Could not convert ZIP to JAR.";
+	    	msg = "❌ Error: Could not convert ZIP to JAR.";
 	        System.out.println(msg);
 	        Main.log.WriteLogs(msg, "ERROR");
 	        return false;
@@ -91,7 +91,7 @@ public class ModExtractor {
                         Files.copy(path, zipOut);
                         zipOut.closeEntry();
                     } catch (IOException e) {
-                    	String msg = "Error zipping the file: " + e.getMessage();
+                    	String msg = "❌ Error zipping the file: " + e.getMessage();
                         System.err.println(msg);
                         Main.log.WriteLogs(msg, "ERROR");
                     }
@@ -105,7 +105,7 @@ public class ModExtractor {
         
         // Check if modFolder exists
         if (!dir.exists() || !dir.isDirectory()) {
-        	String msg = "Invalid directory: " + modFolder;
+        	String msg = "\uD83D\uDCC2 Invalid directory: " + modFolder;
             System.out.println(msg);
             Main.log.WriteLogs(msg, "WARN");
             return extractedDirectories;
@@ -114,7 +114,7 @@ public class ModExtractor {
         // Add jar files to an array and check if there are any
         File[] jarFiles = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".jar"));
         if (jarFiles == null || jarFiles.length == 0) {
-        	String msg = "No JAR files found in the directory: " + modFolder;
+        	String msg = "❌ No JAR files found in the directory: " + modFolder;
             System.out.println(msg);
             Main.log.WriteLogs(msg, "WARN");
             return extractedDirectories;
@@ -126,7 +126,7 @@ public class ModExtractor {
             
         }
         
-        String msg = extractedDirectories.toArray().length + " mods found";
+        String msg = " > "+Main.BLUE+extractedDirectories.toArray().length + Main.RESET+" mods found";
         System.out.println(msg);
         Main.log.WriteLogs(msg, "INFO");
                 
@@ -179,7 +179,7 @@ public class ModExtractor {
                 zis.closeEntry();
             }
         } catch (IOException e) {
-        	String msg = "Error extracting JAR file: " + jarFile.getName() + ". Error: " + e.getMessage();
+        	String msg = "❌ Error extracting JAR file: " + jarFile.getName() + ". Error: " + e.getMessage();
             System.err.println(msg);
             Main.log.WriteLogs(msg,"ERROR");
         }
